@@ -1,0 +1,97 @@
+----------------------  ANGULAR -------------------------
+DAY 01
+    1.1 Anatomy Of a Component
+        html and css can be placed in a separate file
+        Syntax;
+            import {Component} from '@angular/core';
+            @Component({
+            selector: 'app-root',
+            template: `
+                Hello
+            `,
+            standalone: true,
+            })
+            export class AppComponent {}
+    
+    1.2 Updating the Component class via Imterpolation
+        variable defined in the TypeScript class can be referenced in the template.
+        Syntax;
+            import {Component} from '@angular/core';
+
+            @Component({
+            selector: 'app-root',
+            template: `
+                Hello {{ city }}, 
+            {{ 1+1 }}
+            `,
+            standalone: true,
+            })
+            export class AppComponent {
+            city = 'San Francisco';
+            }
+
+    1.3 Composing Components
+        use selector property in the Component configuration to reference a component in another template like
+        an HTML tag. <app-root  />
+
+        Syntax;
+            import {Component} from '@angular/core';
+
+            @Component({
+            selector: 'app-user',
+            template: `
+                Username: {{ username }}
+            `,
+            standalone: true,
+            })
+            export class UserComponent {
+            username = 'youngTech';
+            }
+
+            @Component({
+            selector: 'app-root',
+            template: `<section><app-user /></section>`,
+            standalone: true,
+            imports: [UserComponent],
+            })
+            export class AppComponent {}
+
+    1.4 Control flow in Conmponents - programmatically making decisions
+        a.use @if ()
+            Syntax;
+                import {Component} from '@angular/core';
+
+                @Component({
+                selector: 'app-root',
+                template: `
+                    @if (isServerRunning) {
+                    <span>Yes, the server is running</span>
+                    }
+                    @else {
+                    <span>No, the server is not running</span>
+                    }
+                `,
+                standalone: true,
+                })
+                export class AppComponent {
+                // add the boolean property here
+                isServerRunning = false;
+                }
+        b.use @for
+            Syntax;
+                import {Component} from '@angular/core';
+
+                @Component({
+                selector: 'app-root',
+                template: `
+                   @for (user of users; track user.id) {
+                        <p>{{ user.name }}</p>
+                   }
+                `,
+                standalone: true,
+                })
+                export class AppComponent {
+                    users = [{id: 0, name: 'Sarah'}, {id: 1, name: 'Amy'}, {id: 2, name: 'Rachel'}, {id: 3, name: 'Jessica'}, {id: 4, name: 'Poornima'}]
+                }
+    
+    1.5 Property Binding in Angular
