@@ -171,7 +171,183 @@ DAY 01
                 }
         b. @Output
             child component to communicate to a parent component.
-            the decorator @Output is used in conjunction with EventEmitter
+            the decorator @Output is used in conjunction with EventEmitter.
 
-    1.7
+            Syntax;
+            // Child Component from which the event is emitted for the Parent Component to listen.
+            import {Component, Output, EventEmitter} from '@angular/core';
+
+            @Component({
+            selector: 'app-child',
+            styles: `.btn { padding: 5px; }`,
+            template: `
+                <button class="btn" (click)="addItem()">Add Item</button>
+            `,
+            standalone: true,
+            })
+            export class ChildComponent {
+                @Output() addItemEvent = new EventEmitter<string>();
+                addItem() {
+                    this.addItemEvent.emit('🐢');
+                }
+            }
+
+            // Parent Component - listens for the event
+            import {Component} from '@angular/core';
+            import {ChildComponent} from './child.component';
+
+            @Component({
+            selector: 'app-root',
+            template: `
+                <app-child (addItemEvent)="addItem($event)" />
+                <p>🐢 all the way down {{ items.length }}</p>
+            `,
+            standalone: true,
+            imports: [ChildComponent],
+            })
+            export class AppComponent {
+                items = new Array();
+
+                addItem(item: string) {
+                    this.items.push(item);
+                }
+            }
+
+    1.7 Deferrable Views 
+        Load a Component or section of a Component at a later time.
+        It has multiple triggers.
+        Viewport Trigger is best when deferring content that is far down the page. 
+        Syntax;
+        @defer (on viewport) {
+            <comments /> // Component thea is to be deferred
+            } @placeholder {
+                <p>Future comments</p>
+            } @loading (minimum 2s) {
+                <p>Loading comments...</p>
+            }
+    
+    1.8 Optimizing Images
+        a. NgOptimizedImage Directive
+            Use ngSrc instead of the conventional src attribute in images;
+                Syntax:
+                    <img ngSrc="" height="32" width="32" /> // Static Image
+                    <img [ngSrc]="imageSource" fill />
+        b. Fill - Skip the use of Height and Width atttributes
+            Opposed to using height and width atttributes, a fill atttribute can be used.
+            Beware of background behaviour.
+            Must be used withe the parent Component position either at; relative, fixed or absolute.
+        c. Priotized Important Images 
+            Images with largest on screen grpahics.
+            Syntax;
+                <img ngSrc="" height="32" width="32" priority />
+        d. Image Loader
+            shorter, relative URLs
+
+    1.9 Routing Overview - Angular Router
+        a. Setting Up to use Angular Router
+            Syntax
+                // app/app.routes.ts
+                import {Routes} from '@angular/router';
+
+                export const routes: Routes = [];
+
+                // app.app.config.ts
+                import {ApplicationConfig} from '@angular/core';
+                import {provideRouter} from '@angular/router';
+                import {routes} from './app.routes';
+
+                export const appConfig: ApplicationConfig = {
+                    providers: [provideRouter(routes)],
+                };
+
+                // app.app.components.ts
+                import {Component} from '@angular/core';
+                import {RouterOutlet} from '@angular/router';
+
+                @Component({
+                selector: 'app-root',
+                template: `
+                    <nav>
+                    <a href="/">Home</a>
+                    |
+                    <a href="/user">User</a>
+                    </nav>
+                    <router-outlet />
+                `,
+                standalone: true,
+                imports: [RouterOutlet],
+                })
+                export class AppComponent {}
+        b. Define a Route
+            Inside the app.routes.ts
+            Syntax;
+                import {Routes} from '@angular/router';
+                import {HomeComponent} from './home/home.component';
+                import {UserComponent} from './user/user.component';
+
+                export const routes: Routes = [
+                    {
+                        path: '',
+                        title: 'App Home Page', // Page Title
+                        component: HomeComponent,
+                    },
+                    {
+                        path: 'user',
+                        component: UserComponent,
+                    }
+                ];
+        c. RouteLink for Navigation
+            navigate within the app without entire page refreshing.
+            Syntax;
+                // app/app.component.ts
+                import {Component} from '@angular/core';
+                import { RouterLink, RouterOutlet } from '@angular/router';
+
+                @Component({
+                selector: 'app-root',
+                template: `
+                    <nav>
+                    <a routerLink="/">Home</a>
+                    |
+                    <a routerLink="/user">User</a>
+                    </nav>
+                    <router-outlet />
+                `,
+                standalone: true,
+                imports: [RouterLink, RouterOutlet],
+                })
+                export class AppComponent {}
+
+    2.0 Forms Overview
+        Angular Form Types:- template-driven and reactive
+        a. Creating an Input field
+            <input id="Name" type="text" />
+        b. Enabling data binding - FormsModule's directive ngModel
+            data binding - attach the input value to a property of your class.
+            i.e ngModel binds input values to properties of my class.
+            [()] banana-in-a-box - Two-way binding, property binding and event binding
+            Syntax;
+                import {Component} from '@angular/core';
+                import {FormsModule} from '@angular/forms';
+
+                @Component({
+                    selector: 'app-user',
+                    template: `
+                        <p>Username: {{ username }}</p>
+                        <p>{{ username }}'s favorite framework: {{ favoriteFramework }}</p>
+                        <label for="framework">
+                        Favorite Framework:
+                        <input id="framework" type="text" [(ngModel)]="favoriteFramework" />
+                        </label>
+                    `,
+                    standalone: true,
+                    imports: [FormsModule],
+                })
+                export class UserComponent {
+                    username = 'youngTech';
+                    favoriteFramework = '';
+                }
+
+
+
 
