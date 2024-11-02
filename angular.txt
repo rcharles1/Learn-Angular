@@ -347,7 +347,190 @@ DAY 01
                     username = 'youngTech';
                     favoriteFramework = '';
                 }
+        c. Form Control Value
+            Retrieving value of input field in the component class with the this Syntax.
 
+            Syntax;
+                import {Component} from '@angular/core';
+                import {FormsModule} from '@angular/forms';
 
+                @Component({
+                selector: 'app-user',
+                template: `
+                    <p>Username: {{ username }}</p>
+                    <p>Framework:{{ favoriteFramework }}</p>
+                    <label for="framework">
+                    Favorite Framework:
+                    <input id="framework" type="text" [(ngModel)]="favoriteFramework" />
+                    </label>
+                    <button (click)="showFramework()">Show Framework</button>
+                `,
+                standalone: true,
+                imports: [FormsModule],
+                })
+                export class UserComponent {
+                    favoriteFramework = '';
+                    username = 'youngTech';
 
+                    showFramework() {
+                        alert(this.favoriteFramework)
+                    }
+                }
+        d. Reactive Forms
+            i. Creating reactive forms - Use FormControl and FormGroup i.e.
+                this.form = new FormGroup({
+                    name: new FormControl(''),
+                    email: new FormControl('')
+                });
 
+            Syntax;
+                import {Component} from '@angular/core';
+                import {ReactiveFormsModule, FormControl, FormGroup} from '@angular/forms';
+
+                @Component({
+                selector: 'app-root',
+                template: `
+                    <form [formGroup]="profileForm" (ngSubmit)="handleSubmit()">
+                    <h2>Profile Form</h2>
+                    <p>Name: {{ profileForm.value.name }}</p>
+                    <p>Email: {{ profileForm.value.email }}</p>
+                    <button type="submit">Submit</button>
+                    </form>
+                `,
+                standalone: true,
+                imports: [ReactiveFormsModule],
+                })
+                export class AppComponent {
+                    profileForm = new FormGroup({
+                        name: new FormControl(''),
+                        email: new FormControl(''),
+                    });
+
+                    handleSubmit() {
+                        alert(
+                        this.profileForm.value.name + ' | ' + this.profileForm.value.email
+                        );
+                    }
+                }
+            ii. Validating forms - import Validators.
+                FormGroup class' property, valid determines if a form is valid
+                Syntax;
+                    import {Component} from '@angular/core';
+                    import {FormGroup, FormControl} from '@angular/forms';
+                    import {ReactiveFormsModule, Validators} from '@angular/forms';
+
+                    @Component({
+                        selector: 'app-root',
+                        template: `
+                            <form [formGroup]="profileForm">
+                            <input type="text" formControlName="name" name="name" />
+                            <input type="email" formControlName="email" name="email" />
+                            <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+                            </form>
+                        `,
+                        standalone: true,
+                        imports: [ReactiveFormsModule],
+                    })
+                    export class AppComponent {
+                        profileForm = new FormGroup({
+                            name: new FormControl('', Validators.required),
+                            email: new FormControl('',[ Validators.required, Validators.email]),
+                        });
+                    }
+
+    3.0 Dependency Injection -
+        a. Creating an injectable Services
+            Denoted by the @Injectible decorator that indicates to the DI System that a service is available to be requested.
+            Syntax;
+                @Injectable({
+                    providedIn: 'root' // scope in which the service is available
+                })
+                class UserService {
+                    // methods to retrieve and return data
+                }
+
+            Example;
+                import {Injectable} from '@angular/core';
+
+                @Injectable({
+                providedIn: 'root'
+                })
+
+                export class CarService {
+                cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+                getCars(): string[] {
+                    return this.cars;
+                }
+
+                getCar(id: number) {
+                    return this.cars[id];
+                }
+                }
+        b. Using a service
+            Depending on context:
+                1. Root Injector  defined in root module
+                ii. Component Injector
+                iii. Hierachical Injector
+
+            Inject-based Dependency Injection
+                Syntax - Component Injector
+                    import {Component, inject} from '@angular/core';
+                    import {CarService} from './car.service';
+
+                    @Component({
+                        selector: 'app-root',
+                        template: `<p>Car Listing: {{ display }}</p>`,
+                        standalone: true,
+                    })
+                    export class AppComponent {
+                        display = '';
+                        carService = inject(CarService);
+
+                        constructor() {
+                            this.display = this.carService.getCars().join('⭐️ ')
+                        }
+                    }
+
+            Constructor-based Dependency Injection
+            specify resources as parameters to the Constructor.
+                Syntax;
+                    constructor(private carService: CarService) {
+                        this.display = this.carService.getCars().join(' ⭐️ ');
+                    }
+
+    4.0 Pipes
+        Pure functions, with no side effects that transfom data in templates. 
+        Syntax;
+            import {Component} from '@angular/core';
+            import {LowercasePipe} from '@angular/common';
+
+            @Component({
+            selector: 'app-root',
+            template: `
+                {{ username | lowercase }}
+            `,
+            standalone: true,
+            imports: [LowercasePipe],
+            })
+            export class AppComponent {
+            username = 'yOunGTECh';
+            }
+        a. Formatting data with Pipes
+            By passing parameters to a pipe, via a ':'
+            Syntax;
+                template: `{{ date | date:'medium' }}`;
+        b. Creating Custom Pipes
+            A Pipe is a TypeScript class with @Pipe decorator
+            Syntax;
+                    import {Pipe, PipeTransform} from '@angular/core';
+                    @Pipe({
+                        standalone: true,
+                        name: 'star',
+                    })
+                    export class StarPipe implements PipeTransform {
+                        // Logic is put in the transfom function
+                        transform(value: string): string {
+                            return `⭐️ ${value} ⭐️`;
+                        }
+                    }
