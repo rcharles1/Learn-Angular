@@ -534,3 +534,34 @@ DAY 01
                             return `⭐️ ${value} ⭐️`;
                         }
                     }
+
+    5.0 Conditions and Loops
+        a. @if and @else blocks are used.
+            Syntax;
+                // user-controls.component.ts
+                @Component({
+                    standalone: true,
+                    selector: 'user-controls',
+                    template: `
+                        @if (isAdmin) {
+                        <button>Erase database</button>
+                        } @else {
+                        <p>You are not authorized.</p>
+                        }
+                    `,
+                })
+                export class UserControls {
+                isAdmin = true;
+                }
+        b. Rendering a list
+            Similar to JS' for...of loops, Angular provides the @for block but a track keyword.
+            that tracks each element when elements of a list change or move.
+            Syntax;
+                <!-- ingredient-list.component.html -->
+                <ul>
+                    @for (ingredient of ingredientList; track ingredient.name) {
+                        <li>{{ ingredient.quantity }} - {{ ingredient.name }}</li>
+                    }
+                </ul>
+    6.0 
+
