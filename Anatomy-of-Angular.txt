@@ -563,5 +563,11 @@ DAY 01
                         <li>{{ ingredient.quantity }} - {{ ingredient.name }}</li>
                     }
                 </ul>
-    6.0 
+
+    6.0 More Learnings
+        a. Route parameters
+            Enabling dynamic Navigation via routerLink
+        b. HTTP Communication
+            
+            
 
