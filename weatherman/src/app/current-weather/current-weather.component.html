@@ -1,0 +1,10 @@
+<section>
+    <h2>Today's Weather</h2>
+    <div *ngIf="weatherData">
+        <p>{{ weatherData.location.name}}</p>
+    </div>
+    <div *ngIf="!weatherData">
+        <p>Loading...</p>
+    </div>
+</section>
+  
