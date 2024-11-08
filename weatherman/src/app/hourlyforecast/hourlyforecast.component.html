@@ -1,1 +1,15 @@
-<p>hourlyforecast works!</p>
+<section>
+    <div class="p-2 rounded outline bg-blur">
+        <h2>HOURLY FORECAST</h2>
+        <div *ngIf="weatherData" class="flex flex-row justify-around items-center">
+            <div *ngFor="let hour of weatherData; trackBy: trackHour" class="p-2 flex flex-col space-y-3">
+                <p>{{ hour?.hourFormat }}</p>
+                <img src="/custom_icons/{{ hour?.is_day ? 'day' : 'night' }}/icon_{{ hour?.condition?.code }}.svg" alt="forcast-image" class="size-8"/>
+                <p>{{ hour.temp_c }}</p>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!weatherData">
+        <p>Loading...</p>
+    </div>
+</section>

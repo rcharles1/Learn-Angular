@@ -4,41 +4,40 @@ import { HttpClientModule } from '@angular/common/http';
 import { WeatherDataService } from '../services/weather-data.service';
 import { CalculatorService } from '../services/calculator.service';
 import { LocationService } from '../services/location.service';
+import { HourlyWeather, WeatherData } from '../models/weather-data';
 
 @Component({
   selector: 'app-hourlyforecast',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './hourlyforecast.component.html',
-  // styleUrl: './hourlyforecast.component.css'
 })
 export class HourlyforecastComponent {
   userPosition: { latitude: number; longitude: number } | undefined;
-  weatherData: any;
+  weatherData: HourlyWeather[] | undefined;
   location = inject(LocationService);
   weather = inject(WeatherDataService);
   calculator = inject(CalculatorService);
-  currentWeatherImageUrl: string;
-  lastUpdateTime: string;
+  forecastImageUrl: string;
          
   constructor() {
-    this.currentWeatherImageUrl = '';
-    this.lastUpdateTime = '';
+    this.forecastImageUrl = '';
   }
 
   async ngOnInit() {
     try {
       this.userPosition = await this.location.getCoordinates();
       if (this.userPosition) {
-        this.weather.getCurrentWeatherData(this.userPosition.latitude, this.userPosition.longitude).subscribe(
+        this.weather.getHourlyForecastWeatherData(this.userPosition.latitude, this.userPosition.longitude).subscribe(
           data => {
-            this.weatherData = data;
-            this.currentWeatherImageUrl = `/custom_icons/${this.weatherData?.current?.is_day ? 'day' : 'night'}/icon_${this.weatherData?.current?.condition?.code}.svg`;
-            const formattedTime =  this.calculator.formatTime(this.weatherData?.current?.last_updated);
-            this.lastUpdateTime = `${formattedTime.hours}:${formattedTime.minutes}`;
+            const currentHour = new Date().getHours();
+            this.weatherData = data?.forecast?.forecastday?.[0].hour.slice(currentHour, currentHour + 7).map((hour: HourlyWeather) => ({ 
+              ...hour, hourFormat: this.calculator.formatHourToAmPm(hour.time) 
+            }));
+            console.log(this.weatherData)
           },
           error => {
-            console.error('Error fetching weather data:', error);
+            console.error('Error fetching forecast data:', error);
           }
         );
       }
@@ -46,4 +45,6 @@ export class HourlyforecastComponent {
       console.error('Error getting user position:', error);
     }
   }
+
+  trackHour(index: number, hour: HourlyWeather): number { return index; }
 }

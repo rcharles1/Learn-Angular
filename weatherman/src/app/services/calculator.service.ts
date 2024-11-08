@@ -22,4 +22,13 @@ export class CalculatorService {
       minutes: minutes,
     });
   }
+
+  /** * A function that formats the time from YYYY-MM-DDTHH:MM:SSZ to AM/PM hour format. * @param {string} apiTime - The time string from the API in the format YYYY-MM-DDTHH:MM:SSZ. * @returns {string} The formatted hour in AM/PM format. */ 
+  formatHourToAmPm(apiTime: string): string { 
+    const date = new Date(apiTime); 
+    const hours = date.getHours(); 
+    const ampm = hours >= 12 ? 'PM' : 'AM'; 
+    const formattedHours = hours % 12 || 12;
+    return `${formattedHours} ${ampm}`; 
+  }
 }

@@ -568,6 +568,3 @@ DAY 01
         a. Route parameters
             Enabling dynamic Navigation via routerLink
         b. HTTP Communication
-            
-            
-
