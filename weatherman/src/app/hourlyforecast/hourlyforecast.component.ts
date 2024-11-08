@@ -1,18 +1,18 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { HttpClientModule } from '@angular/common/http';
-import { LocationService } from '../services/location.service';
 import { WeatherDataService } from '../services/weather-data.service';
 import { CalculatorService } from '../services/calculator.service';
+import { LocationService } from '../services/location.service';
 
 @Component({
-  selector: 'app-current-weather',
+  selector: 'app-hourlyforecast',
   standalone: true,
-  imports: [CommonModule, HttpClientModule], 
-  templateUrl: './current-weather.component.html',
-  //styleUrls: ['./current-weather.component.css']
+  imports: [],
+  templateUrl: './hourlyforecast.component.html',
+  // styleUrl: './hourlyforecast.component.css'
 })
-export class CurrentWeatherComponent implements OnInit {
+export class HourlyforecastComponent {
   userPosition: { latitude: number; longitude: number } | undefined;
   weatherData: any;
   location = inject(LocationService);
