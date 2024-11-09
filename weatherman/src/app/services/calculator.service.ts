@@ -31,4 +31,28 @@ export class CalculatorService {
     const formattedHours = hours % 12 || 12;
     return `${formattedHours} ${ampm}`; 
   }
+
+  formatDate(apiDate: string) { 
+    const dateObj = new Date(apiDate); 
+    const dayOfWeekNum = dateObj.getDay(); 
+    
+    let day = dateObj.getDate(); 
+    let month = dateObj.getMonth(); 
+    let year = dateObj.getFullYear(); 
+    
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; 
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; 
+    const daysOfWeekName = days[dayOfWeekNum]; 
+    const monthName = months[month]; 
+    
+    day = day < 10 ? 0 + day : day; 
+    month = month < 10 ? 0 + month : month; 
+    
+    return {
+       weekDay: daysOfWeekName, 
+       day: day, 
+       month: monthName, 
+       year: year, 
+    };
+  }
 }

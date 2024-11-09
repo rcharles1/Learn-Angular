@@ -22,4 +22,10 @@ export class WeatherDataService {
     const url = `${this.apiUrl}/forecast.json?key=${this.apiKey}&q=${latitude},${longitude}&hours=7`; 
     return this.http.get(url);
   }
+
+   // This function to fetches 10 Days weather forecast
+   getTenDayForecastWeatherData(latitude: number, longitude: number): Observable<any> {
+    const url = `${this.apiUrl}/forecast.json?key=${this.apiKey}&q=${latitude},${longitude}&days=10`; 
+    return this.http.get(url);
+  }
 }

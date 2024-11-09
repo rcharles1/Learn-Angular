@@ -3,22 +3,23 @@ import { CommonModule } from '@angular/common';
 import { WeatherDataService } from '../services/weather-data.service';
 import { CalculatorService } from '../services/calculator.service';
 import { LocationService } from '../services/location.service';
-import { HourlyWeather } from '../models/weather-data';
+import { ForecastDay } from '../models/weather-data';
 
 @Component({
-  selector: 'app-hourlyforecast',
+  selector: 'app-ten-day-forecast',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './hourlyforecast.component.html',
+  templateUrl: './ten-day-forecast.component.html',
+  styleUrl: './ten-day-forecast.component.css'
 })
-export class HourlyforecastComponent {
+export class TenDayForecastComponent {
   userPosition: { latitude: number; longitude: number } | undefined;
-  weatherData: HourlyWeather[] | undefined;
+  weatherData: ForecastDay[] | undefined;
   location = inject(LocationService);
   weather = inject(WeatherDataService);
   calculator = inject(CalculatorService);
   forecastImageUrl: string;
-         
+ 
   constructor() {
     this.forecastImageUrl = '';
   }
@@ -27,12 +28,11 @@ export class HourlyforecastComponent {
     try {
       this.userPosition = await this.location.getCoordinates();
       if (this.userPosition) {
-        this.weather.getHourlyForecastWeatherData(this.userPosition.latitude, this.userPosition.longitude).subscribe(
+        this.weather.getTenDayForecastWeatherData(this.userPosition.latitude, this.userPosition.longitude).subscribe(
           data => {
-            const currentHour = new Date().getHours();
-            this.weatherData = data?.forecast?.forecastday?.[0].hour.slice(currentHour, currentHour + 7).map((hour: HourlyWeather) => ({ 
-              ...hour, hourFormat: this.calculator.formatHourToAmPm(hour.time) 
-            }));
+            this.weatherData = data?.forecast?.forecastday.map((day: ForecastDay) => ({ 
+              ...day, dayFormat: this.calculator.formatDate(day.date) 
+            }));;
           },
           error => {
             console.error('Error fetching forecast data:', error);
@@ -44,5 +44,5 @@ export class HourlyforecastComponent {
     }
   }
 
-  trackHour(index: number, hour: HourlyWeather): number { return index; }
+  trackDay(index: number, day: ForecastDay): number { return index; }
 }
