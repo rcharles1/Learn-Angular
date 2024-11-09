@@ -15,6 +15,7 @@ import { CalculatorService } from '../services/calculator.service';
 export class CurrentWeatherComponent implements OnInit {
   userPosition: { latitude: number; longitude: number } | undefined;
   weatherData: any;
+  degreeSymbol = '\u00B0';
   location = inject(LocationService);
   weather = inject(WeatherDataService);
   calculator = inject(CalculatorService);

@@ -1,4 +1,4 @@
-weatherPalettes = {
+const weatherPalettes = {
     clear: {
       background: 'bg-[#00BFFF]',
       primary: 'text-[#FFD700]',

@@ -18,17 +18,13 @@ export class TodaysdetailsComponent {
   userPosition: { latitude: number; longitude: number } | undefined;
   weatherData: any;
   astroData: Astro | undefined;
+  hoursBetweenSunriseAndSunset: { hours: number, minutes: number} | undefined; 
+  hoursBetweenMoonriseAndMoonset: { hours: number, minutes: number} | undefined;
   location = inject(LocationService);
   weather = inject(WeatherDataService);
   calculator = inject(CalculatorService);
-  currentWeatherImageUrl: string;
-  lastUpdateTime: string;
-  hoursBetweenSunriseAndSunset: number | undefined; 
-  hoursBetweenMoonriseAndMoonset: number | undefined
          
   constructor() {
-    this.currentWeatherImageUrl = '';
-    this.lastUpdateTime = '';
   }
 
   async ngOnInit() {
@@ -38,9 +34,6 @@ export class TodaysdetailsComponent {
         this.weather.getCurrentWeatherData(this.userPosition.latitude, this.userPosition.longitude).subscribe(
           data => {
             this.weatherData = data;
-            this.currentWeatherImageUrl = `/custom_icons/${this.weatherData?.current?.is_day ? 'day' : 'night'}/icon_${this.weatherData?.current?.condition?.code}.svg`;
-            const formattedTime =  this.calculator.formatTime(this.weatherData?.current?.last_updated);
-            this.lastUpdateTime = `${formattedTime.hours}:${formattedTime.minutes}`;
           },
           error => {
             console.error('Error fetching todays details:', error);
@@ -49,15 +42,14 @@ export class TodaysdetailsComponent {
         this.weather.getTAstroData(this.userPosition.latitude, this.userPosition.longitude).subscribe(
           data => {
             this.astroData = data?.forecast?.forecastday?.[0].astro;
-            console.log(this.astroData);
             if (this.astroData) { 
               if (this.calculator.isValidTimeString(this.astroData.sunrise) && this.calculator.isValidTimeString(this.astroData.sunset)) { 
-                this.hoursBetweenSunriseAndSunset = this.calculator.calculateTimeDifference(this.astroData.sunrise, this.astroData.sunset); 
-              } 
+                this.hoursBetweenSunriseAndSunset = this.calculator.calculateTimeDifference(this.astroData.sunrise, this.astroData.sunset); }
               
-            if (this.calculator.isValidTimeString(this.astroData.moonrise) && this.calculator.isValidTimeString(this.astroData.moonset)) { 
-              this.hoursBetweenMoonriseAndMoonset = this.calculator.calculateTimeDifference(this.astroData.moonrise, this.astroData.moonset); 
-            } }
+              if (this.calculator.isValidTimeString(this.astroData.moonrise) && this.calculator.isValidTimeString(this.astroData.moonset)) { 
+                this.hoursBetweenMoonriseAndMoonset = this.calculator.calculateTimeDifference(this.astroData.moonrise, this.astroData.moonset); 
+              } 
+            }
           },
           error => {
             console.error('Error fetching astro data:', error);
