@@ -55,4 +55,25 @@ export class CalculatorService {
        year: year, 
     };
   }
+
+  calculateTimeDifference(startTime: string, endTime: string): number { 
+    // Helper function to convert time in 'HH:MM AM/PM' format to Date object 
+    const convertToTime = (time: string): Date => { 
+      const [hourMinute, modifier] = time.split(' '); 
+      let [hours, minutes] = hourMinute.split(':').map(Number); 
+      if (modifier === 'PM' && hours !== 12) { 
+        hours += 12; 
+      } else if (modifier === 'AM' && hours === 12) { 
+        hours = 0; 
+      } return new Date(1970, 0, 1, hours, minutes); 
+    }; // Parse the start and end times as Date objects 
+
+    const start = convertToTime(startTime); 
+    const end = convertToTime(endTime); // Calculate the difference in milliseconds 
+    const differenceInMs = end.getTime() - start.getTime(); // Convert the difference from milliseconds to hours 
+    const differenceInHours = differenceInMs / (1000 * 60 * 60); 
+
+  return differenceInHours; }
+
+  isValidTimeString(time: string | undefined): time is string { return typeof time === 'string' && !!time; }
 }

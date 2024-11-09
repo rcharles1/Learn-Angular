@@ -3,7 +3,7 @@ export interface Condition {
     icon: string;
     code: number;
   }
-  interface Astro {
+  export interface Astro {
     sunrise: string; 
     sunset: string; 
     moonrise: string; 

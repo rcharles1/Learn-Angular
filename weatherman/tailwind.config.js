@@ -8,7 +8,10 @@ module.exports = {
       secondaryBg: '#00BFFF',
       jetBlack: '#000000',
       ivoryWhite: '#FFFFF0',
-    },
+      white: '#FFFFFF',
+      green500: '#22c55e',
+      gray200: '#e5e7eb'
+     },
     extend: {},
   },
   plugins: [],
