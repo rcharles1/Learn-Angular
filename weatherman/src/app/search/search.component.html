@@ -1,0 +1,7 @@
+<form [formGroup]="searchForm" (ngSubmit)="handleSubmit()">
+    <div class="flex flex-row space-x-2 justify- items-center bg-ivoryWhite/20 p-2 rounded-3xl overflow-hidden capitalize">
+        <label for="city" class="block"><img src="/assets/search.svg" alt="search-icon" class="size-6"></label>
+        <input id="city" formControlName="city" type="text" placeholder="Search a city.." class="text-white w-96 bg-transparent focus:outline outline-transparent ">
+        <button type="submit"><img src="/assets/right.svg" alt="done" class="size-7"></button>
+    </div>
+</form>  

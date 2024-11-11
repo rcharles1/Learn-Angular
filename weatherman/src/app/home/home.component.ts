@@ -4,14 +4,18 @@ import { CurrentWeatherComponent } from '../current-weather/current-weather.comp
 import { HourlyforecastComponent } from "../hourlyforecast/hourlyforecast.component";
 import { TenDayForecastComponent } from '../ten-day-forecast/ten-day-forecast.component';
 import { TodaysdetailsComponent } from '../todaysdetails/todaysdetails.component';
+import { SearchComponent } from "../search/search.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CurrentWeatherComponent, HourlyforecastComponent, TenDayForecastComponent, TodaysdetailsComponent],
+  imports: [CommonModule, CurrentWeatherComponent, HourlyforecastComponent, TenDayForecastComponent, TodaysdetailsComponent, SearchComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  searchResult: any;
 
+  handleWeatherDataFound(data: any) {
+    this.searchResult = data;
+  }
 }

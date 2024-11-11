@@ -1,6 +1,7 @@
 <div class="flex flex-col space-y-10">
-    <app-current-weather></app-current-weather>
-    <app-hourlyforecast></app-hourlyforecast>
+    <app-search (weatherDataFound)="handleWeatherDataFound($event)"></app-search>
+    <app-current-weather [searchResult]="searchResult"></app-current-weather>
+    <app-hourlyforecast [searchResult]="searchResult"></app-hourlyforecast>
     <app-ten-day-forecast></app-ten-day-forecast>
-    <app-todaysdetails></app-todaysdetails>
+    <app-todaysdetails [searchResult]="searchResult"></app-todaysdetails>
 </div>
