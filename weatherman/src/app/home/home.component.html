@@ -2,6 +2,6 @@
     <app-search (weatherDataFound)="handleWeatherDataFound($event)"></app-search>
     <app-current-weather [searchResult]="searchResult"></app-current-weather>
     <app-hourlyforecast [searchResult]="searchResult"></app-hourlyforecast>
-    <app-ten-day-forecast></app-ten-day-forecast>
+    <app-ten-day-forecast [searchResult]="searchResult"></app-ten-day-forecast>
     <app-todaysdetails [searchResult]="searchResult"></app-todaysdetails>
 </div>

@@ -35,6 +35,12 @@ export class WeatherDataService {
     return this.http.get(url);
   }
 
+   // This function to fetches 10 Days weather forecast by city
+   getTenDayForecastWeatherDataByCity(city: string): Observable<any> {
+    const url = `${this.apiUrl}/forecast.json?key=${this.apiKey}&q=${city}&days=7`; 
+    return this.http.get(url);
+  }
+
    // This function to fetches 10 Days weather forecast
    getTenDayForecastWeatherData(latitude: number, longitude: number): Observable<any> {
     const url = `${this.apiUrl}/forecast.json?key=${this.apiKey}&q=${latitude},${longitude}&days=10`; 

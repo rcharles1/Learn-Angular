@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LocationService } from '../services/location.service';
 import { WeatherDataService } from '../services/weather-data.service';
 import { CalculatorService } from '../services/calculator.service';
-import { HalfCircleProgressBarComponent } from '../half-circle-progress-bar/half-circle-progress-bar.component';
 import { Astro } from '../models/weather-data';
 
 @Component({
   selector: 'app-todaysdetails',
   standalone: true,
-  imports: [CommonModule, HalfCircleProgressBarComponent],
+  imports: [CommonModule],
   templateUrl: './todaysdetails.component.html',
   styleUrl: './todaysdetails.component.css'
 })
@@ -92,6 +91,7 @@ export class TodaysdetailsComponent implements OnChanges {
   }
 
   useWeatherData(data: any) {
+    console.log(data)
     this.weatherData = data;
   }
   

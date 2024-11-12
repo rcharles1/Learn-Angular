@@ -16,39 +16,32 @@ export class HourlyforecastComponent implements OnInit, OnChanges {
 
   userPosition: { latitude: number; longitude: number } | undefined;
   weatherData: HourlyWeather[] | undefined;
-  isLoading = true; // Initialize loading flag
   location = inject(LocationService);
   weather = inject(WeatherDataService);
   calculator = inject(CalculatorService);
-  forecastImageUrl: string;
-         
-  constructor() {
-    this.forecastImageUrl = '';
-  }
+  isLoading = true;
+
+  constructor() {}
 
   async ngOnInit() {
     try {
       await this.loadWeatherData();
     } catch (error) {
       console.error('Error getting user position:', error);
-      this.isLoading = false; // Set loading to false on error
+      this.isLoading = false;
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['searchResult']) {
-      if (this.searchResult) {
-        this.useWeatherData(this.searchResult);
-      }
+    if (changes['searchResult'] && changes['searchResult'].currentValue) {
+      this.fetchHourlyForecastByCity(changes['searchResult'].currentValue.location.name);
     }
   }
 
   async loadWeatherData() {
     if (this.searchResult) {
-      // Use search result if available
-      this.fetchHourlyForecastByCity(this.searchResult.location.region);
+      this.fetchHourlyForecastByCity(this.searchResult.location.name);
     } else {
-      // Proceed with using latitude and longitude
       this.userPosition = await this.location.getCoordinates();
       if (this.userPosition) {
         this.fetchHourlyForecastByGeoLocation(this.userPosition.latitude, this.userPosition.longitude);
@@ -56,42 +49,45 @@ export class HourlyforecastComponent implements OnInit, OnChanges {
     }
   }
 
-  // Uses Geo-Location
   fetchHourlyForecastByGeoLocation(latitude: number, longitude: number) {
     this.weather.getHourlyForecastWeatherData(latitude, longitude).subscribe(
       data => {
         this.useWeatherData(data);
-        this.isLoading = false; // Set loading to false after data is fetched
+        this.isLoading = false;
       },
       error => {
         console.error('Error fetching forecast data:', error);
-        this.isLoading = false; // Set loading to false on error
+        this.isLoading = false;
       }
     );
   }
 
-  // Uses searched city
   fetchHourlyForecastByCity(city: string) {
     this.weather.getHourlyForecastWeatherDataByCity(city).subscribe(
       data => {
         this.useWeatherData(data);
-        this.isLoading = false; // Set loading to false after data is fetched
+        this.isLoading = false;
       },
       error => {
         console.error('Error fetching forecast data for city:', error);
-        this.isLoading = false; // Set loading to false on error
+        this.isLoading = false;
       }
     );
   }
 
   useWeatherData(data: any) {
     const currentHour = new Date().getHours();
-    this.weatherData = data?.forecast?.forecastday?.[0].hour.slice(currentHour, currentHour + 7).map((hour: HourlyWeather) => ({
-      ...hour, hourFormat: this.calculator.formatHourToAmPm(hour.time)
-    }));
+    if (data && data.forecast && data.forecast.forecastday && data.forecast.forecastday[0]) {
+      this.weatherData = data.forecast.forecastday[0].hour.slice(currentHour, currentHour + 7).map((hour: HourlyWeather) => ({
+        ...hour, hourFormat: this.calculator.formatHourToAmPm(hour.time)
+      }));
+    } else {
+      console.error('Invalid data structure:', data);
+      this.weatherData = [];
+    }
   }
 
-  trackHour(index: number, hour: HourlyWeather): number { 
-    return index; 
+  trackHour(index: number, hour: HourlyWeather): number {
+    return index;
   }
 }
