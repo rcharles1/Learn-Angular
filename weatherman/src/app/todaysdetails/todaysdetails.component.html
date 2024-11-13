@@ -1,7 +1,7 @@
 <section>
-    <div *ngIf="weatherData && forecastDayData && astroData">
-        <h2>TODAY'S DETAILS</h2>
-        <div class="space-y-3">
+    <div *ngIf="weatherData && forecastDayData && astroData" class="space-y-2">
+        <h2 class="text-lg font-medium">TODAY'S DETAILS</h2>
+        <div class="space-y-4">
             <div class="grid grid-cols-2 gap-y-2">
                 <div class="flex flex-row space-x-2 p-2">
                     <div class="bg-ivoryWhite/20 rounded p-2"><img src="/assets/temperature.svg" alt="temperature-svg" class="size-6"></div>
@@ -61,14 +61,14 @@
                     </div>
                 </div>
             </div>
-            <div class="h-32 p-2">
-                <h3 class="text-ivoryWhite/65 text-center">DAYLIGHT HOURS</h3>
+            <div class="h-32 p-2 space-y-2">
+                <h3 class="text-ivoryWhite/85 text-center">DAYLIGHT HOURS</h3>
                 <div class="flex flex-row justify-between item-bottom">
                     <div class="flex flex-col space-y-2 items-center">
                         <div><img src="/assets/sunrise.svg" alt="sunrise" class="size-10"></div>
                         <p class="text-sm">{{ astroData.sunrise }}</p>
                     </div>
-                    <div class="flex flex-col space-y-2 items-center">
+                    <div class="flex flex-col justify-between">
                         <p class="text-sm">{{ hoursBetweenSunriseAndSunset?.hours }}hr {{ hoursBetweenSunriseAndSunset?.minutes }}mins</p>
                     </div>
                     <div class="flex flex-col space-y-2 items-center">

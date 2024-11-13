@@ -1,1 +1,8 @@
-<p class="mb-8 text-center">Showing works!</p>
+<main>
+    <div *ngIf="!searchResult">
+
+    </div>
+    <div *ngIf="searchResult">
+        <p class="mb-8 text-center text-xs">Showing for {{ searchResult.location.name }} {{ searchResult.location.name }} region, {{ searchResult.location.country }}</p>
+    </div>
+</main>
