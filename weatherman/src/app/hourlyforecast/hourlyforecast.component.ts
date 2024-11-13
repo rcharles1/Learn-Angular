@@ -4,11 +4,12 @@ import { WeatherDataService } from '../services/weather-data.service';
 import { CalculatorService } from '../services/calculator.service';
 import { LocationService } from '../services/location.service';
 import { HourlyWeather } from '../models/weather-data';
+import { SkeletonComponent } from '../skeleton/skeleton.component';
 
 @Component({
   selector: 'app-hourlyforecast',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SkeletonComponent],
   templateUrl: './hourlyforecast.component.html',
 })
 export class HourlyforecastComponent implements OnInit, OnChanges {
@@ -84,6 +85,7 @@ export class HourlyforecastComponent implements OnInit, OnChanges {
     } else {
       console.error('Invalid data structure:', data);
       this.weatherData = [];
+      this.isLoading = false;
     }
   }
 

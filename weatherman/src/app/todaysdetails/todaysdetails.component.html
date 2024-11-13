@@ -1,84 +1,86 @@
 <section>
-    <h2>TODAY'S DETAILS</h2>
-    <div *ngIf="weatherData && astroData" class="space-y-3">
-        <div class="grid grid-cols-2 gap-y-2">
-            <div class="flex flex-row space-x-2 p-2">
-                <div class="bg-ivoryWhite/20 rounded p-2"><img src="/assets/temperature.svg" alt="temperature-svg" class="size-6"></div>
-                <div class="text-sm">
-                    <h4 class="text-ivoryWhite/80">HIGH/LOW</h4>
-                    <p>28 | 25</p>
+    <div *ngIf="weatherData && forecastDayData && astroData">
+        <h2>TODAY'S DETAILS</h2>
+        <div class="space-y-3">
+            <div class="grid grid-cols-2 gap-y-2">
+                <div class="flex flex-row space-x-2 p-2">
+                    <div class="bg-ivoryWhite/20 rounded p-2"><img src="/assets/temperature.svg" alt="temperature-svg" class="size-6"></div>
+                    <div class="text-sm">
+                        <h4 class="text-ivoryWhite/80">HIGH/LOW</h4>
+                        <p> {{ forecastDayData.day.maxtemp_c }} | {{ forecastDayData.day.mintemp_c }}</p>
+                    </div>
+                </div>
+                <div class=" flex flex-row space-x-2  p-2">
+                    <div class="bg-ivoryWhite/20 rounded p-2"><img src="/assets/windsock.svg" alt="windsock-svg" class="size-6"></div>
+                    <div class="text-sm">
+                        <h4 class="text-ivoryWhite/80">WIND</h4>
+                        <p>{{ weatherData.current.wind_kph }} kph</p>
+                    </div>
+                </div>
+                <div class=" flex flex-row space-x-2  p-2">
+                    <div class="bg-ivoryWhite/20 rounded p-2"><img src="/assets/precipitation.svg" alt="precipitation" class="size-6"></div>
+                    <div class="text-sm">
+                        <h4 class="text-ivoryWhite/80">PRECIPITATION</h4>
+                        <p>{{ weatherData.current.precip_mm }} mm</p>
+                    </div>
+                </div>
+                
+                <div class=" flex flex-row space-x-2  p-2">
+                    <div class="bg-ivoryWhite/20 rounded-md p-2"><img src="/assets/dew-point.svg" alt="dew-point" class="size-6"></div>
+                    <div class="text-sm">
+                        <h4 class="text-ivoryWhite/80">DEW POINT</h4>
+                        <p>{{ weatherData.current.dewpoint_c }}</p>
+                    </div>
+                </div>
+                <div class=" flex flex-row space-x-2  p-2">
+                    <div class="bg-ivoryWhite/20 rounded p-2"><img src="/assets/pressure.svg" alt="pressure" class="size-6"></div>
+                    <div class="text-sm">
+                        <h4 class="text-ivoryWhite/80">PRESSURE</h4>
+                        <p>{{ weatherData.current.pressure_mb }} mb</p>
+                    </div>
+                </div>
+                <div class=" flex flex-row space-x-2  p-2">
+                    <div class="bg-ivoryWhite/20 rounded-md p-2"><img src="/assets/uv.svg" alt="uv-svg" class="size-6"></div>
+                    <div class="text-sm">
+                        <h4 class="text-ivoryWhite/80">MAX UV INDEX</h4>
+                        <p>{{ weatherData.current.uv }} Cm</p>
+                    </div>
+                </div>
+                <div class=" flex flex-row space-x-2  p-2">
+                    <div class="bg-ivoryWhite/20 rounded-md p-2"><img src="/assets/humidity.svg" alt="humidity-svg" class="size-6"></div>
+                    <div class="text-sm">
+                        <h4 class="text-ivoryWhite/80">HUMIDITY</h4>
+                        <p>{{ weatherData.current.humidity }}</p>
+                    </div>
+                </div>
+                <div class=" flex flex-row space-x-2  p-2">
+                    <div class="bg-ivoryWhite/20 rounded-md p-2"><img src="/assets/view.svg" alt="visibility-svg" class="size-6"></div>
+                    <div class="text-sm">
+                        <h4 class="text-ivoryWhite/80">VISIBILITY</h4>
+                        <p>{{ weatherData.current.vis_km }} km</p>
+                    </div>
                 </div>
             </div>
-            <div class=" flex flex-row space-x-2  p-2">
-                <div class="bg-ivoryWhite/20 rounded p-2"><img src="/assets/windsock.svg" alt="windsock-svg" class="size-6"></div>
-                <div class="text-sm">
-                    <h4 class="text-ivoryWhite/80">WIND</h4>
-                    <p>14 km/hr</p>
-                </div>
-            </div>
-            <div class=" flex flex-row space-x-2  p-2">
-                <div class="bg-ivoryWhite/20 rounded p-2"><img src="/assets/precipitation.svg" alt="precipitation" class="size-6"></div>
-                <div class="text-sm">
-                    <h4 class="text-ivoryWhite/80">PRECIPITATION</h4>
-                    <p>0 Cm</p>
-                </div>
-            </div>
-            
-            <div class=" flex flex-row space-x-2  p-2">
-                <div class="bg-ivoryWhite/20 rounded-md p-2"><img src="/assets/dew-point.svg" alt="dew-point" class="size-6"></div>
-                <div class="text-sm">
-                    <h4 class="text-ivoryWhite/80">DEW POINT</h4>
-                    <p>0 Cm</p>
-                </div>
-            </div>
-            <div class=" flex flex-row space-x-2  p-2">
-                <div class="bg-ivoryWhite/20 rounded p-2"><img src="/assets/pressure.svg" alt="pressure" class="size-6"></div>
-                <div class="text-sm">
-                    <h4 class="text-ivoryWhite/80">PRESSURE</h4>
-                    <p>0 Cm</p>
-                </div>
-            </div>
-            <div class=" flex flex-row space-x-2  p-2">
-                <div class="bg-ivoryWhite/20 rounded-md p-2"><img src="/assets/uv.svg" alt="uv-svg" class="size-6"></div>
-                <div class="text-sm">
-                    <h4 class="text-ivoryWhite/80">MAX UV INDEX</h4>
-                    <p>0 Cm</p>
-                </div>
-            </div>
-            <div class=" flex flex-row space-x-2  p-2">
-                <div class="bg-ivoryWhite/20 rounded-md p-2"><img src="/assets/humidity.svg" alt="humidity-svg" class="size-6"></div>
-                <div class="text-sm">
-                    <h4 class="text-ivoryWhite/80">HUMIDITY</h4>
-                    <p>0 Cm</p>
-                </div>
-            </div>
-            <div class=" flex flex-row space-x-2  p-2">
-                <div class="bg-ivoryWhite/20 rounded-md p-2"><img src="/assets/view.svg" alt="visibility-svg" class="size-6"></div>
-                <div class="text-sm">
-                    <h4 class="text-ivoryWhite/80">VISIBILITY</h4>
-                    <p>0 Cm</p>
-                </div>
-            </div>
-        </div>
-        <div class="h-56 p-2">
-            <h3 class="text-ivoryWhite/65 text-center">DAYLIGHT HOURS</h3>
-            <div class="flex flex-row justify-between item-bottom">
-                <div class="flex flex-col space-y-2 items-center">
-                    <div><img src="/assets/sunrise.svg" alt="sunrise" class="size-10"></div>
-                    <p class="text-sm">{{ astroData.sunrise }}</p>
-                </div>
-                <div class="flex flex-col space-y-2 items-center">
-                    <p class="text-sm">{{ hoursBetweenSunriseAndSunset?.hours }}hr {{ hoursBetweenSunriseAndSunset?.minutes }}mins</p>
-                </div>
-                <div class="flex flex-col space-y-2 items-center">
-                    <div><img src="/assets/sunset.svg" alt="sunset" class="size-10"></div>
-                    <p class="text-sm">{{ astroData.sunset }}</p>
+            <div class="h-32 p-2">
+                <h3 class="text-ivoryWhite/65 text-center">DAYLIGHT HOURS</h3>
+                <div class="flex flex-row justify-between item-bottom">
+                    <div class="flex flex-col space-y-2 items-center">
+                        <div><img src="/assets/sunrise.svg" alt="sunrise" class="size-10"></div>
+                        <p class="text-sm">{{ astroData.sunrise }}</p>
+                    </div>
+                    <div class="flex flex-col space-y-2 items-center">
+                        <p class="text-sm">{{ hoursBetweenSunriseAndSunset?.hours }}hr {{ hoursBetweenSunriseAndSunset?.minutes }}mins</p>
+                    </div>
+                    <div class="flex flex-col space-y-2 items-center">
+                        <div><img src="/assets/sunset.svg" alt="sunset" class="size-10"></div>
+                        <p class="text-sm">{{ astroData.sunset }}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div *ngIf="!(weatherData && astroData)">
-        <p>Loading...</p>
+        <app-skeleton></app-skeleton>
     </div>
 </section>
   

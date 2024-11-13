@@ -4,11 +4,12 @@ import { WeatherDataService } from '../services/weather-data.service';
 import { CalculatorService } from '../services/calculator.service';
 import { LocationService } from '../services/location.service';
 import { ForecastDay } from '../models/weather-data';
+import { SkeletonComponent } from '../skeleton/skeleton.component';
 
 @Component({
   selector: 'app-ten-day-forecast',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SkeletonComponent],
   templateUrl: './ten-day-forecast.component.html',
   styleUrl: './ten-day-forecast.component.css'
 })

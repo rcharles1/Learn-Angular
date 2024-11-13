@@ -4,11 +4,12 @@ import { LocationService } from '../services/location.service';
 import { WeatherDataService } from '../services/weather-data.service';
 import { CalculatorService } from '../services/calculator.service';
 import { Astro } from '../models/weather-data';
+import { SkeletonComponent } from '../skeleton/skeleton.component';
 
 @Component({
   selector: 'app-todaysdetails',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SkeletonComponent],
   templateUrl: './todaysdetails.component.html',
   styleUrl: './todaysdetails.component.css'
 })
@@ -18,6 +19,7 @@ export class TodaysdetailsComponent implements OnChanges {
   userPosition: { latitude: number; longitude: number } | undefined;
   weatherData: any;
   astroData: Astro | undefined;
+  forecastDayData: any;
   hoursBetweenSunriseAndSunset: { hours: number, minutes: number} | undefined; 
   hoursBetweenMoonriseAndMoonset: { hours: number, minutes: number} | undefined;
   location = inject(LocationService);
@@ -45,8 +47,8 @@ export class TodaysdetailsComponent implements OnChanges {
   async loadWeatherData() {
     if(this.searchResult) {
       // Use search result if available
-      this.useWeatherData(this.searchResult);
-      this.fetchAstroData(this.searchResult.location.lat, this.searchResult.location.lon);
+      await this.fetchWeatherData(this.searchResult.location.lat, this.searchResult.location.lon);
+      await this.fetchAstroData(this.searchResult.location.lat, this.searchResult.location.lon);
     } else {
       try {
         this.userPosition = await this.location.getCoordinates();
@@ -63,7 +65,7 @@ export class TodaysdetailsComponent implements OnChanges {
   async fetchWeatherData(latitude: number, longitude: number) {
     this.weather.getCurrentWeatherData(latitude, longitude).subscribe(
       data => {
-        this.weatherData = data;
+        this.useWeatherData(data);
       },
       error => {
         console.error('Error fetching todays details:', error);
@@ -74,6 +76,7 @@ export class TodaysdetailsComponent implements OnChanges {
   async fetchAstroData(latitude: number, longitude: number) {
     this.weather.getTAstroData(latitude, longitude).subscribe(
       data => {
+        this.forecastDayData = data?.forecast?.forecastday?.[0];
         this.astroData = data?.forecast?.forecastday?.[0].astro;
         if (this.astroData) { 
           if (this.calculator.isValidTimeString(this.astroData.sunrise) && this.calculator.isValidTimeString(this.astroData.sunset)) { 
@@ -91,7 +94,6 @@ export class TodaysdetailsComponent implements OnChanges {
   }
 
   useWeatherData(data: any) {
-    console.log(data)
     this.weatherData = data;
   }
   

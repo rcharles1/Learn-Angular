@@ -5,11 +5,12 @@ import { HourlyforecastComponent } from "../hourlyforecast/hourlyforecast.compon
 import { TenDayForecastComponent } from '../ten-day-forecast/ten-day-forecast.component';
 import { TodaysdetailsComponent } from '../todaysdetails/todaysdetails.component';
 import { SearchComponent } from "../search/search.component";
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CurrentWeatherComponent, HourlyforecastComponent, TenDayForecastComponent, TodaysdetailsComponent, SearchComponent],
+  imports: [CommonModule, CurrentWeatherComponent, HourlyforecastComponent, TenDayForecastComponent, TodaysdetailsComponent, SearchComponent, FooterComponent],
   templateUrl: './home.component.html',
 })
 export class HomeComponent {

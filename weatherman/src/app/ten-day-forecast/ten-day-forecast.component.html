@@ -1,7 +1,7 @@
 <section>
-    <div class="p-2 rounded bg-secondaryBg/10">
+    <div *ngIf="weatherData" class="p-2 rounded bg-secondaryBg/10">
         <h2 class="font-medium text-lg">3-DAY FORECAST</h2>
-        <div *ngIf="weatherData" class="flex flex-col space-y-1">
+        <div class="flex flex-col space-y-1">
             <div *ngFor="let day of weatherData; trackBy: trackDay" class="p-1 text-sm flex flex-row items-center justify-between">
                 <p>{{ day?.dayFormat?.weekDay }}</p>
                 <img src="/custom_icons/day/icon_{{ day?.day?.condition?.code }}.svg" alt="forcast-image" class="size-6"/>
@@ -12,6 +12,6 @@
         </div>
     </div>
     <div *ngIf="!weatherData">
-        <p>Loading...</p>
+        <app-skeleton></app-skeleton>
     </div>
 </section>
