@@ -1,4 +1,4 @@
-import { Component  } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CurrentWeatherComponent } from '../current-weather/current-weather.component';
 import { HourlyforecastComponent } from "../hourlyforecast/hourlyforecast.component";
@@ -13,8 +13,13 @@ import { FooterComponent } from '../footer/footer.component';
   imports: [CommonModule, CurrentWeatherComponent, HourlyforecastComponent, TenDayForecastComponent, TodaysdetailsComponent, SearchComponent, FooterComponent],
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
+export class HomeComponent { 
+  @Output() dataEmitter = new EventEmitter<any>();
   searchResult: any;
+  
+  onReceiveDataFromCurrent(data: any) {
+    this.dataEmitter.emit(data);
+  }
 
   handleWeatherDataFound(data: any) {
     this.searchResult = data;

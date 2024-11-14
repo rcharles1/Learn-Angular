@@ -36,7 +36,7 @@ export class SearchComponent implements OnInit {
         this.weather.searchCurrentWeatherData(this.city).subscribe(
           data => {
             this.searchedWeatherData = data;
-            this.weatherDataFound.emit(this.searchedWeatherData); // Emits search results
+            this.weatherDataFound.emit(this.searchedWeatherData);
           },
           error => {
             console.error('Error fetching searched weather data:', error);

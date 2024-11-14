@@ -5,13 +5,28 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Montserrat', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-    background-color: #00BFFF;
-    color: ivory;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-family: 'Montserrat', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: ivory;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bg-sunny {
+  background-color: #FFD700; /* Golden */
+}
+
+.bg-rainy {
+  background-color: #87CEEB; /* Sky blue */
+}
+
+.bg-cloudy {
+  background-color: #B0C4DE; /* Light steel blue */
+}
+
+.bg-default {
+  background-color: #00BFFF; /* Deep sky blue */
 }

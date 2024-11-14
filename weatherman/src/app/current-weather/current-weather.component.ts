@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { HttpClientModule } from '@angular/common/http';
 import { LocationService } from '../services/location.service';
@@ -13,6 +13,7 @@ import { SkeletonComponent } from '../skeleton/skeleton.component';
   templateUrl: './current-weather.component.html',
 })
 export class CurrentWeatherComponent implements OnInit, OnChanges {
+  @Output() weatherDataUsed = new EventEmitter<any>();
   @Input() searchResult: any;
   isLoading = true;
 
@@ -69,6 +70,9 @@ export class CurrentWeatherComponent implements OnInit, OnChanges {
   useWeatherData(data: any) {
     this.isLoading = false;
     this.weatherData = data;
+    
+    this.weatherDataUsed.emit(this.weatherData);
+
     this.currentWeatherImageUrl = `/custom_icons/${this.weatherData?.current?.is_day ? 'day' : 'night'}/icon_${this.weatherData?.current?.condition?.code}.svg`;
     const formattedTime = this.calculator.formatTime(this.weatherData?.current?.last_updated);
     this.lastUpdateTime = `${formattedTime.hours}:${formattedTime.minutes}`;

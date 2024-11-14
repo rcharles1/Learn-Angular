@@ -1,6 +1,6 @@
 <main class="main">
   <section class="p-4">
-      <app-home></app-home>
+      <app-home (dataEmitter)="onReceiveDataFromCurrent($event)" ></app-home>
   </section>
 </main>
 <router-outlet />
