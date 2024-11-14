@@ -1,8 +1,8 @@
-<section>
+<section class="p-2 rounded md:rounded-md lg:p-4">
     <div *ngIf="weatherData && forecastDayData && astroData" class="space-y-2">
-        <h2 class="text-lg font-medium">TODAY'S DETAILS</h2>
+        <h2 class="text-lg font-medium md:text-xl">TODAY'S DETAILS</h2>
         <div class="space-y-4">
-            <div class="grid grid-cols-2 gap-y-2">
+            <div class="grid grid-cols-2 gap-y-2 md:grid-cols-4">
                 <div class="flex flex-row space-x-2 p-2">
                     <div class="bg-ivoryWhite/20 rounded p-2"><img src="/assets/temperature.svg" alt="temperature-svg" class="size-6"></div>
                     <div class="text-sm">

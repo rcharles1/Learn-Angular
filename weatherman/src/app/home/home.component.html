@@ -1,4 +1,4 @@
-<div class="flex flex-col space-y-10">
+<div class="flex flex-col space-y-10 md:py-4 md:px-8 lg:px-28">
     <app-search (weatherDataFound)="handleWeatherDataFound($event)"></app-search>
     <app-current-weather [searchResult]="searchResult" (weatherDataUsed)="onReceiveDataFromCurrent($event)"></app-current-weather>
     <app-hourlyforecast [searchResult]="searchResult"></app-hourlyforecast>
